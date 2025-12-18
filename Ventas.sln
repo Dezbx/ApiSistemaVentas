@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36121.58 d17.14
+VisualStudioVersion = 17.14.36121.58
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ventas.Api", "Ventas.Api\Ventas.Api.csproj", "{E115254C-019E-4D8F-A5BC-0745E38DCA63}"
 EndProject
@@ -18,6 +18,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Layer.Domain", "Layer.Domain", "{FB118B2F-24B5-4C0A-AEFF-9C45D7890916}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Layer.Infraestructure", "Layer.Infraestructure", "{BF6658E1-CB11-4E2D-B01F-51C67BE6E9C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL_Server", "SQL_Server", "{3AD2B184-34DE-40E2-9E39-33FBAF96C740}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{C8B36C5C-2139-4EF3-9209-52F36A23E4B6}"
+	ProjectSection(SolutionItems) = preProject
+		SistemaVentasDB.sql = SistemaVentasDB.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoreProcedures", "StoreProcedures", "{1B8CD094-2537-4109-9D30-4BDC687ABA7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +59,8 @@ Global
 		{723E1177-DC0D-4BF6-B7D5-F14A99997F20} = {92BC828C-61BF-4AD2-87C0-E52352DB9596}
 		{71CE1438-4DDD-42CA-805F-385CFEA6D623} = {FB118B2F-24B5-4C0A-AEFF-9C45D7890916}
 		{006D1D02-09E9-45EF-8033-E9CCCEE2532B} = {BF6658E1-CB11-4E2D-B01F-51C67BE6E9C5}
+		{C8B36C5C-2139-4EF3-9209-52F36A23E4B6} = {3AD2B184-34DE-40E2-9E39-33FBAF96C740}
+		{1B8CD094-2537-4109-9D30-4BDC687ABA7F} = {3AD2B184-34DE-40E2-9E39-33FBAF96C740}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {79E47296-333C-4FDA-90C7-0B276146072E}
