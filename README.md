@@ -69,7 +69,7 @@ Ventas
     ├── Controllers
     └── Program.cs
 
----
+```
 
 ## 🧠 Descripción de Capas
 
