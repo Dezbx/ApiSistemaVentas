@@ -69,6 +69,8 @@ Ventas
     ├── Controllers
     └── Program.cs
 
+---
+
 ## 🧠 Descripción de Capas
 
 ### 🔹 Ventas.Domain
