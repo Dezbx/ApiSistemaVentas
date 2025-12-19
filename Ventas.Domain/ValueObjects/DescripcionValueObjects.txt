@@ -1,0 +1,7 @@
+Para que una ase sea considerada un Value Object (VO), debe cumplir con las siguientes características:
+
+- No tiene identidad propia
+- Se define solo por su valor
+- Tiene reglas de validación
+- Es inmutable
+- Se puede reutilizar en muchas entidades

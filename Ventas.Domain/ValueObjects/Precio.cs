@@ -9,13 +9,26 @@ namespace Ventas.Domain.ValueObjects
     public record Precio
     {
         public decimal Valor { get; }
-        public string Moneda { get; } = "USD";
+        public string Moneda { get; }
 
-        private Precio(decimal valor) => Valor = valor >= 0 ? valor : throw new ArgumentException("El precio no puede ser negativo");
+        private Precio(decimal valor, string moneda)
+        {
+            if (valor < 0)
+                throw new ArgumentException("El precio no puede ser negativo.");
 
-        public static Precio Crear(decimal valor) => new(valor);
+            Valor = valor;
+            Moneda = moneda;
+        }
 
-        // Métodos para operaciones matemáticas
-        public Precio AplicarDescuento(decimal porcentaje) => new(Valor * (1 - porcentaje / 100));
+        public static Precio Crear(decimal valor, string moneda = "PEN")
+            => new Precio(valor, moneda);
+
+        // Operaciones útiles para el dominio
+        public Precio AplicarDescuento(decimal porcentaje)
+            => new Precio(Valor * (1 - porcentaje / 100), Moneda);
+
+        public override string ToString() => $"{Moneda} {Valor:N2}";
+
+        public static implicit operator decimal(Precio precio) => precio.Valor;
     }
 }

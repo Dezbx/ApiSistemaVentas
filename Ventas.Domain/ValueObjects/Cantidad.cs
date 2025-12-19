@@ -10,10 +10,28 @@ namespace Ventas.Domain.ValueObjects
     {
         public int Valor { get; }
 
-        private Cantidad(int valor) => Valor = valor > 0 ? valor : throw new ArgumentException("La cantidad debe ser mayor a cero");
+        private Cantidad(int valor)
+        {
+            if (valor < 0)
+                throw new ArgumentException("La cantidad no puede ser negativa.");
 
-        public static Cantidad Crear(int valor) => new(valor);
+            Valor = valor;
+        }
 
-        public Cantidad Sumar(Cantidad otra) => new(Valor + otra.Valor);
+        public static Cantidad Crear(int valor) => new Cantidad(valor);
+
+        // Lógica de inventario
+        public Cantidad Sumar(int cantidad) => new Cantidad(Valor + cantidad);
+
+        public Cantidad Restar(int cantidad)
+        {
+            if (Valor - cantidad < 0)
+                throw new InvalidOperationException("No hay suficiente stock para realizar la operación.");
+            return new Cantidad(Valor - cantidad);
+        }
+
+        public override string ToString() => Valor.ToString();
+
+        public static implicit operator int(Cantidad cantidad) => cantidad.Valor;
     }
 }
