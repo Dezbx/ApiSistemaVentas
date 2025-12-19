@@ -1,35 +1,25 @@
 ﻿using Ventas.Domain.Entities.Common;
+using Ventas.Domain.ValueObjects;
 
 namespace Ventas.Domain.Entities.Security
 {
     public class Rol : AuditableEntity
     {
         public int RolId { get; set; }
-        public string Descripcion { get; private set; } = string.Empty;
+        public DescripcionTexto Descripcion { get; private set; } = null!;
 
         protected Rol() { } // Para EF Core
 
         //Este constructor sirve para garantizar que un Rol nazca siempre válido desde el dominio.
-        public Rol(string descripcion, int createdBy)
+        public Rol(DescripcionTexto descripcion, int createdBy)
         {
-            SetDescripcion(descripcion);
+            Descripcion = descripcion ?? throw new ArgumentNullException(nameof(descripcion)); ;
             SetCreated(createdBy);
         }
-
-        //revisar si es valido xd
-        public void ValidarRol()
+        public void CambiarDescripcion(DescripcionTexto nuevaDescripcion, int updatedBy)
         {
-            SetDescripcion(Descripcion);
-        }   
-        private void SetDescripcion(string descripcion)
-        {
-            if (string.IsNullOrWhiteSpace(descripcion))
-                throw new ArgumentException("La descripción del rol es obligatoria");
-
-            if (descripcion.Length > 20)
-                throw new ArgumentException("La descripción no puede superar los 20 caracteres");
-
-            Descripcion = descripcion.Trim();
+            Descripcion = nuevaDescripcion ?? throw new ArgumentNullException(nameof(nuevaDescripcion));
+            SetUpdated(updatedBy);
         }
     }
 }

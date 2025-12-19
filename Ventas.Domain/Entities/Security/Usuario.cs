@@ -15,7 +15,7 @@ namespace Ventas.Domain.Entities.Security
         public Password Password { get; private set; } = null!;
         public DateTime FechaRegistro { get; private set; }
 
-        protected Usuario() { }
+        protected Usuario() { } // Para EF Core / Dapper
 
         public Usuario(Rol rol, NombreUsuario nombreUsuario, CorreoElectronico correo,
                       Password password, int createdBy)
