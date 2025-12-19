@@ -118,8 +118,8 @@ CREATE TABLE compartido.TipoDocumento
 CREATE TABLE core.Sede
 (
 	SedeId			INT IDENTITY (1,1) PRIMARY KEY,
-	Descripcion		NVARCHAR (30) NOT NULL,
-	Direccion		NVARCHAR (150) NOT NULL,
+	Descripcion		NVARCHAR (100) NOT NULL,
+	Direccion		NVARCHAR (200) NOT NULL,
 	IsDeleted		BIT          NOT NULL DEFAULT 0 -- Soft delete
 
 	CONSTRAINT UQ_Sede UNIQUE (Descripcion, Direccion)
@@ -149,7 +149,9 @@ CREATE TABLE core.Empleado
 	Telefono					NVARCHAR (15) NOT NULL,
 	Sexo						NCHAR (1) NOT NULL,
 	FechaNacimiento				DATE NOT NULL,
-	EstadoConstanteId						INT NOT NULL,
+	Direccion					NVARCHAR (200) NOT NULL,
+
+	EstadoConstanteId			INT NOT NULL,
 
 	-- Auditoria
 	CreatedAt		DATETIME2(0) NOT NULL DEFAULT SYSUTCDATETIME(),
@@ -179,6 +181,8 @@ CREATE TABLE core.Cliente
 	Telefono					NVARCHAR (15) NOT NULL,
 	Sexo						NCHAR (1) NOT NULL,
 	FechaNacimiento				DATE NOT NULL,
+	Direccion					NVARCHAR (200) NOT NULL,
+
 	EstadoConstanteId			INT NOT NULL,
 
 	-- Auditoria
@@ -225,6 +229,7 @@ CREATE TABLE core.Proveedor
 	Correo							NVARCHAR (100) NULL,
 	NombreCompletoContacto			NVARCHAR (150) NOT NULL,
 	NumeroDeCuenta					NVARCHAR (20) NULL,
+	EstadoConstanteId				INT NOT NULL,
 
 	-- Auditoria
 	CreatedAt		DATETIME2(0) NOT NULL DEFAULT SYSUTCDATETIME(),
@@ -235,6 +240,7 @@ CREATE TABLE core.Proveedor
 
 	-- Mostrar alerta cuando haya mas de dos uq repetidas.
 	CONSTRAINT UQ_Proveedor UNIQUE (NumeroIdentificacionFiscal, Telefono, Correo, NumeroDeCuenta)
+	CONSTRAINT FK_Proveedor_EstadoConstanteId FOREIGN KEY (EstadoConstanteId) REFERENCES compartido.Constante (ConstanteId)
 )
 
 CREATE TABLE core.Categoria
@@ -246,12 +252,12 @@ CREATE TABLE core.Categoria
 	CONSTRAINT UQ_Categoria_Nombre UNIQUE (Nombre)
 )
 
-CREATE TABLE core.DetalleProveedores
+CREATE TABLE core.DetalleProveedor
 (
 	ProveedorId INT FOREIGN KEY REFERENCES core.Proveedor (ProveedorId),
 	CategoriaId INT FOREIGN KEY REFERENCES core.Categoria (CategoriaId)
 
-	CONSTRAINT PK_DetalleProveedores PRIMARY KEY (ProveedorId, CategoriaId)
+	CONSTRAINT PK_DetalleProveedor PRIMARY KEY (ProveedorId, CategoriaId)
 )
 
 CREATE TABLE core.Producto
