@@ -7,7 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="StoreProcedures\" />
+    <Folder Include="StoreProcedures\Core\" />
+    <Folder Include="StoreProcedures\Inventory\" />
+    <Folder Include="StoreProcedures\Shared\" />
+    <Folder Include="StoreProcedures\Security\" />
   </ItemGroup>
 
 </Project>
