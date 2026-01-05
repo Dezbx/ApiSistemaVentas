@@ -1,4 +1,4 @@
-﻿using Ventas.Domain.ValueObjects;
+﻿using Ventas.Domain.ValueObjects.Common;
 
 namespace Ventas.Domain.Entities.Shared
 {
@@ -12,7 +12,7 @@ namespace Ventas.Domain.Entities.Shared
 
         public TipoDocumento(DescripcionTexto descripcion)
         {
-            Descripcion = descripcion?? throw new ArgumentException(nameof(descripcion));
+            Descripcion = descripcion ?? throw new ArgumentException(nameof(descripcion));
             IsDeleted = false;
         }
 

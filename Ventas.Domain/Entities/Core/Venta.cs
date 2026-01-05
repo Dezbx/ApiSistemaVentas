@@ -1,6 +1,6 @@
 ﻿using Ventas.Domain.Entities.Common;
 using Ventas.Domain.Entities.Shared;
-using Ventas.Domain.ValueObjects;
+using Ventas.Domain.ValueObjects.Core;
 
 namespace Ventas.Domain.Entities.Core
 {

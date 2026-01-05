@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ventas.Domain.ValueObjects;
+﻿using Ventas.Domain.ValueObjects.Common;
+using Ventas.Domain.ValueObjects.Core;
 
 namespace Ventas.Domain.Entities.Core
 {
@@ -21,7 +17,7 @@ namespace Ventas.Domain.Entities.Core
             Descripcion = descripcion ?? throw new ArgumentNullException(nameof(descripcion));
             Direccion = direccion ?? throw new ArgumentNullException(nameof(direccion));
             IsDeleted = false;
-        } 
+        }
 
         public void CambiarDescripcion(DescripcionTexto nuevaDescripcion)
         {

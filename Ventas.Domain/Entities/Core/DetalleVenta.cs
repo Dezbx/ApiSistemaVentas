@@ -1,4 +1,4 @@
-﻿using Ventas.Domain.ValueObjects;
+﻿using Ventas.Domain.ValueObjects.Core;
 
 namespace Ventas.Domain.Entities.Core
 {

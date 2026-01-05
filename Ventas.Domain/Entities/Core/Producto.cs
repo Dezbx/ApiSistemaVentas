@@ -1,5 +1,6 @@
 ﻿using Ventas.Domain.Entities.Common;
-using Ventas.Domain.ValueObjects;
+using Ventas.Domain.ValueObjects.Common;
+using Ventas.Domain.ValueObjects.Core;
 
 namespace Ventas.Domain.Entities.Core
 {
@@ -12,7 +13,7 @@ namespace Ventas.Domain.Entities.Core
         public DescripcionTexto? Descripcion { get; private set; }
         public Sku CodigoSku { get; private set; } = null!;
         public Precio PrecioCompra { get; private set; } = null!;
-        public Precio PrecioVenta  { get; private set; } = null!;
+        public Precio PrecioVenta { get; private set; } = null!;
         public Cantidad Stock { get; private set; } = null!;
         public Cantidad StockMinimo { get; private set; } = null!;
         public DateTime FechaCreacion { get; private set; }

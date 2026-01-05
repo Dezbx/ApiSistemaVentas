@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ventas.Domain.Entities.Common;
+﻿using Ventas.Domain.Entities.Common;
 using Ventas.Domain.Entities.Security;
 using Ventas.Domain.Entities.Shared;
-using Ventas.Domain.ValueObjects;
+using Ventas.Domain.ValueObjects.Core;
+using Ventas.Domain.ValueObjects.Shared;
 
 namespace Ventas.Domain.Entities.Core
 {
@@ -26,7 +22,7 @@ namespace Ventas.Domain.Entities.Core
         public Sexo Sexo { get; private set; } = null!;
         public DateOnly FechaNacimiento { get; private set; }
         public Direccion Direccion { get; private set; } = null!;
-        public int EstadoConstanteId { get; private set; }  
+        public int EstadoConstanteId { get; private set; }
 
         protected Cliente() { } // Para EF Core / Dapper
 
@@ -55,7 +51,7 @@ namespace Ventas.Domain.Entities.Core
             SetCreated(createdBy); // Método de AuditableEntity
         }
 
-        public void ActualizarInformacion(CorreoElectronico nuevoCorreo,Telefono nuevoTelefono, Direccion nuevaDireccion, int updatedBy)
+        public void ActualizarInformacion(CorreoElectronico nuevoCorreo, Telefono nuevoTelefono, Direccion nuevaDireccion, int updatedBy)
         {
             Correo = nuevoCorreo ?? throw new ArgumentNullException(nameof(nuevoCorreo)); ;
             Telefono = nuevoTelefono ?? throw new ArgumentNullException(nameof(nuevoTelefono));

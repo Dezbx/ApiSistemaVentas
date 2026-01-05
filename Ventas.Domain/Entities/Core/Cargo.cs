@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ventas.Domain.ValueObjects;
+﻿using Ventas.Domain.ValueObjects.Common;
 
 namespace Ventas.Domain.Entities.Core
 {
@@ -17,7 +12,7 @@ namespace Ventas.Domain.Entities.Core
 
         public Cargo(DescripcionTexto descripcion)
         {
-            Descripcion = descripcion ?? throw new ArgumentException (nameof(descripcion));
+            Descripcion = descripcion ?? throw new ArgumentException(nameof(descripcion));
             IsDeleted = false;
         }
         public void CambiarDescripcion(DescripcionTexto descripcion)

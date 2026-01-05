@@ -1,6 +1,6 @@
 ﻿using Ventas.Domain.Entities.Common;
 using Ventas.Domain.Entities.Shared;
-using Ventas.Domain.ValueObjects;
+using Ventas.Domain.ValueObjects.Common;
 
 namespace Ventas.Domain.Entities.Inventory
 {
@@ -12,7 +12,7 @@ namespace Ventas.Domain.Entities.Inventory
         public int MovimientoInventarioPeriodoId { get; private set; }
         public virtual Periodo Periodo { get; private set; } = null!;
 
-        public DateTime Fecha{ get; private set; }
+        public DateTime Fecha { get; private set; }
         public DescripcionTexto Motivo { get; private set; } = null!; // "Entrada" o "Salida"
 
         protected MovimientoInventario() { }

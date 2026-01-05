@@ -1,10 +1,10 @@
-﻿using Ventas.Domain.ValueObjects;
+﻿using Ventas.Domain.ValueObjects.Common;
 
 namespace Ventas.Domain.Entities.Core
 {
     public class Categoria
     {
-        public int CategoriaId { get; private set; } 
+        public int CategoriaId { get; private set; }
         public DescripcionTexto Nombre { get; private set; } = null!;
         public bool IsDeleted { get; private set; }
 

@@ -1,12 +1,14 @@
 ﻿using Ventas.Domain.Entities.Common;
 using Ventas.Domain.Entities.Shared;
-using Ventas.Domain.ValueObjects;
+using Ventas.Domain.ValueObjects.Common;
+using Ventas.Domain.ValueObjects.Core;
+using Ventas.Domain.ValueObjects.Shared;
 
 namespace Ventas.Domain.Entities.Core
 {
     public class Proveedor : AuditableEntity
     {
-        public int ProveedorId { get; private set; } 
+        public int ProveedorId { get; private set; }
         public int TipoDocumentoId { get; private set; }
         public virtual TipoDocumento TipoDocumento { get; private set; } = null!;
         public DescripcionTexto Nombre { get; private set; } = null!;

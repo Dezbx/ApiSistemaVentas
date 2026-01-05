@@ -1,5 +1,5 @@
 ﻿using Ventas.Domain.Entities.Common;
-using Ventas.Domain.ValueObjects;
+using Ventas.Domain.ValueObjects.Common;
 
 namespace Ventas.Domain.Entities.Security
 {

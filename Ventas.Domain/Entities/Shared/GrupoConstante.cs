@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ventas.Domain.ValueObjects;
+﻿using Ventas.Domain.ValueObjects.Common;
 
 namespace Ventas.Domain.Entities.Shared
 {

@@ -1,4 +1,4 @@
-﻿using Ventas.Domain.ValueObjects;
+﻿using Ventas.Domain.ValueObjects.Shared;
 
 namespace Ventas.Domain.Entities.Shared
 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ventas.Domain.ValueObjects;
+﻿using Ventas.Domain.ValueObjects.Common;
 
 namespace Ventas.Domain.Entities.Shared
 {
@@ -12,7 +7,7 @@ namespace Ventas.Domain.Entities.Shared
         public int ConstanteId { get; set; }
         public int GrupoConstanteId { get; set; }
         public string Valor { get; set; } = string.Empty; //1,2,3,4,5, etc
-        public DescripcionTexto Descripcion { get; private set; } = null! ; // Pago en proceso, pago en ... etc
+        public DescripcionTexto Descripcion { get; private set; } = null!; // Pago en proceso, pago en ... etc
         public int Orden { get; set; } // Indica el orden en que se mostrará la constante dentro de su grupo
 
         protected Constante() { } // Para EF Core / Dapper
