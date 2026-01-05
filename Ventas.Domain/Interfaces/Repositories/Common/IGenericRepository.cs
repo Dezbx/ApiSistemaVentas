@@ -11,11 +11,13 @@ namespace Ventas.Domain.Interfaces.Repositories.Common
         Task<bool> ActualizarAsync(T entidad);
 
         // Consultas comunes (Para evitar repetición en cada repo) [cite: 149, 151]
-        Task<bool> ExisteAsync(int id);
+        Task<bool> ExistePorIdAsync(int id);
         Task<int> ContarTotalAsync();
 
         // Operaciones Masivas (Basado en tu arquitectura de Tipos y Grupos) [cite: 152, 154]
         Task<bool> AgregarVariosAsync(IEnumerable<T> entidades);
         Task<bool> ActualizarVariosAsync(IEnumerable<T> entidades);
+        Task<bool> DesactivarVariosAsync(IEnumerable<T> entidades);
+
     }
 }

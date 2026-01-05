@@ -7,6 +7,5 @@ namespace Ventas.Domain.Interfaces.Repositories.Shared
     {
         Task<GrupoConstante?> ObtenerPorDescripcionAsync(string descripcion);
         Task<bool> ExisteDescripcionAsync(string descripcion, int? excluirId = null);
-        Task<bool> EliminarLogicoVariosAsync(IEnumerable<int> ids, int usuarioId);
     }
 }
