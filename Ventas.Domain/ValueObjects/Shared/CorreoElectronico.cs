@@ -1,4 +1,4 @@
-﻿namespace Ventas.Domain.ValueObjects
+﻿namespace Ventas.Domain.ValueObjects.Shared
 {
     public record CorreoElectronico
     {

@@ -1,7 +1,6 @@
-﻿using System.Text.RegularExpressions;
-using Ventas.Domain.Entities.Common;
+﻿using Ventas.Domain.Entities.Common;
 
-namespace Ventas.Domain.ValueObjects
+namespace Ventas.Domain.ValueObjects.Common
 {
     public record DescripcionTexto : TextoValidado
     {

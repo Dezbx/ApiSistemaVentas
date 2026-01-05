@@ -1,6 +1,6 @@
 ﻿using Ventas.Domain.Entities.Common;
 
-namespace Ventas.Domain.ValueObjects
+namespace Ventas.Domain.ValueObjects.Shared
 {
     public record NombrePersona : TextoValidado
     {

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
-namespace Ventas.Domain.ValueObjects
+namespace Ventas.Domain.ValueObjects.Shared
 {
     public record NumeroDocumento
     {
         public string Valor { get; }
 
-        private NumeroDocumento (string valor) => Valor = valor;
+        private NumeroDocumento(string valor) => Valor = valor;
 
-        public static NumeroDocumento Crear (string numero)
+        public static NumeroDocumento Crear(string numero)
         {
             if (string.IsNullOrWhiteSpace(numero))
                 throw new ArgumentException("El número de documento es obligatorio, no puede estar vacío.");
@@ -18,7 +17,7 @@ namespace Ventas.Domain.ValueObjects
 
             if (numeroLimpio.Length > 20)
                 throw new ArgumentException("El número de documento no puede exceder los 20 caracteres.");
-            
+
             if (numeroLimpio.Length < 8)
                 throw new ArgumentException("El número de documento debe tener al menos 8 caracteres.");
 

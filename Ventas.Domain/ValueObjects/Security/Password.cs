@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
-namespace Ventas.Domain.ValueObjects
+namespace Ventas.Domain.ValueObjects.Security
 {
     public record Password
     {
@@ -27,7 +23,7 @@ namespace Ventas.Domain.ValueObjects
 
             using var hmac = new System.Security.Cryptography.HMACSHA512();
             var salt = hmac.Key;
-            var hash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(passwordPlana));
+            var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(passwordPlana));
 
             return new Password(hash, salt);
         }
@@ -46,7 +42,7 @@ namespace Ventas.Domain.ValueObjects
         public bool Verificar(string passwordPlana)
         {
             using var hmac = new System.Security.Cryptography.HMACSHA512(Salt);
-            var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(passwordPlana));
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(passwordPlana));
             return computedHash.SequenceEqual(Hash);
         }
     }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ventas.Domain.Entities.Common;
+﻿using Ventas.Domain.Entities.Common;
 
-namespace Ventas.Domain.ValueObjects
+namespace Ventas.Domain.ValueObjects.Shared
 {
     public record CodigoPeriodo : TextoValidado
     {

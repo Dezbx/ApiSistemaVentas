@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
-namespace Ventas.Domain.ValueObjects
+namespace Ventas.Domain.ValueObjects.Core
 {
     public record Telefono
     {
         public string Valor { get; }
 
-        private Telefono (string valor) => Valor = valor;
+        private Telefono(string valor) => Valor = valor;
 
         public static Telefono Crear(string telefono)
         {
