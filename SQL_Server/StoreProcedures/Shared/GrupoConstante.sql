@@ -155,8 +155,7 @@ AS
     BEGIN
         SET NOCOUNT ON;
         UPDATE GC
-        SET GC.Descripcion = Lista.Descripcion,
-            GC.IsDeleted = Lista.IsDeleted
+        SET GC.IsDeleted = Lista.IsDeleted
         FROM compartido.GrupoConstante AS GC
         INNER JOIN @GrupoConstanteLista AS Lista
             ON GC.GrupoConstanteId = Lista.GrupoConstanteId
