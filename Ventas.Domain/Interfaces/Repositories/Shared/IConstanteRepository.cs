@@ -6,7 +6,7 @@ namespace Ventas.Domain.Interfaces.Repositories.Shared
     public interface IConstanteRepository : IGenericRepository<Constante>
     {
         Task <IEnumerable<Constante>> ObtenerPorGrupoConstanteIdAsync(int grupoConstanteId);
-        Task <bool> ExisteValorEnGrupoAsync(int grupoConstanteId, string valor);    
+        Task <bool> ExisteValorEnGrupoAsync(int grupoConstanteId, int valor);    
         Task  <bool> ExisteDescripcionEnGrupoAsync(int grupoConstanteId, string descripcion);
         Task <int> ContarConstantesEnGrupoAsync(int grupoConstanteId);
         Task <bool> TieneConstantesAsociadasAsync(int constanteId);     
