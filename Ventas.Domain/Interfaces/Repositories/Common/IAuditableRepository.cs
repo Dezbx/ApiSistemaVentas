@@ -2,18 +2,19 @@
 
 namespace Ventas.Domain.Interfaces.Repositories.Common
 {
+    // Usamos 'T' para que devuelva la entidad real (Usuario, Producto, etc.)
+    // Ponemos el 'where' para asegurar que solo se use con entidades que heredan de AuditableEntity
     public interface IAuditableRepository<T> : IGenericRepository<T> where T : AuditableEntity
     {
-        // Gestión de Estado [cite: 80, 81]
-        Task<IEnumerable<T>> ObtenerActivosAsync();
+        // OJOOOOOO: 
+        // La interfaz IGenericRepository<T> usa int id, pero la tabla AuditLog usa BIGINT (long en C#).
+        
+        
+        // YA NO declaramos ObtenerPorId, Agregar, etc. (Ya los hereda de IGenericRepository)
+        // Agregamos SOLO lo que es propio de auditoría
         Task<IEnumerable<T>> ObtenerEliminadosAsync();
-
-        // Borrado y Restauración [cite: 120, 130]
+        
+        // El método de eliminar ahora es auditable porque recibe quién lo hace
         Task<bool> EliminarLogicoAsync(int id, int usuarioId);
-        Task<bool> RestaurarAsync(int id, int usuarioId);
-
-        // Conteos especializados [cite: 122, 133]
-        Task<int> ContarActivosAsync();
-        Task<int> ContarEliminadosAsync();
     }
 }

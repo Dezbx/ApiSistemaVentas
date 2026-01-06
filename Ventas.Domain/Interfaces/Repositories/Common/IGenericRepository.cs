@@ -18,6 +18,7 @@ namespace Ventas.Domain.Interfaces.Repositories.Common
         Task<bool> AgregarVariosAsync(IEnumerable<T> entidades);
         Task<bool> ActualizarVariosAsync(IEnumerable<T> entidades);
         Task<bool> DesactivarVariosAsync(IEnumerable<T> entidades);
+        Task<bool> ActivarVariosAsync(IEnumerable<T> entidades);
 
     }
 }

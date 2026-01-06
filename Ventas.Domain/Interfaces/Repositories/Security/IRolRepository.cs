@@ -7,6 +7,5 @@ namespace Ventas.Domain.Interfaces.Repositories.Security
     {
         Task <bool> ExisteDescripcionAsync(string descripcion, int? excluirRolId = null);
         Task <Rol?> ObtenerPorDescripcionAsync(string descripcion);
-        Task <bool> EliminarFisicoAsync(int id, int usuarioId);    
     }
 }
