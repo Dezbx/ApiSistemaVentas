@@ -165,6 +165,26 @@ AS
 
     END
 GO
+
+CREATE OR ALTER PROCEDURE compartido.GrupoConstante_spActivarVarios
+(
+    @GrupoConstanteLista compartido.GrupoConstanteType READONLY
+)
+AS
+    BEGIN
+        SET NOCOUNT ON;
+        UPDATE GC
+        SET GC.IsDeleted = Lista.IsDeleted
+        FROM compartido.GrupoConstante AS GC
+        INNER JOIN @GrupoConstanteLista AS Lista
+            ON GC.GrupoConstanteId = Lista.GrupoConstanteId
+        WHERE GC.IsDeleted = 1; -- solo actualizar los que están eliminados
+
+        SELECT @@ROWCOUNT;
+
+    END
+GO
+
 CREATE OR ALTER PROCEDURE compartido.GrupoConstante_spObtenerPorDescripcion
 (
     @Descripcion VARCHAR (100)

@@ -189,6 +189,26 @@ AS
     END
 GO
 
+CREATE OR ALTER PROCEDURE compartido.Constante_spActivarVarios
+(
+	@ConstanteLista compartido.ConstanteType READONLY
+)
+AS
+    BEGIN
+        SET NOCOUNT ON;
+
+		UPDATE C 	
+		SET C.IsDeleted = Lista.IsDeleted
+		FROM compartido.Constante AS C 
+		INNER JOIN @ConstanteLista AS Lista
+			ON C.ConstanteId = Lista.ConstanteId
+		WHERE C.IsDeleted = 1
+
+		SELECT @@ROWCOUNT;
+
+    END
+GO
+
 
 CREATE OR ALTER PROCEDURE compartido.Constante_spObtenerPorGrupoConstanteId
 (
@@ -315,7 +335,7 @@ AS
 		)
 		    SELECT CAST(1 AS BIT); -- Devuelve True (1) si hay asociaciones
 		ELSE
-		    SELECT CAST(0 AS BIT); -- Devuelve False (0) si está libre
+		    SELECT CAST(0 AS BIT); -- Devuelve False (0) si estï¿½ libre
 		END
 GO
 
