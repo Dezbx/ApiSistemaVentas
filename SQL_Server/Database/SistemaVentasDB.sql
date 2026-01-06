@@ -49,6 +49,8 @@ CREATE TABLE compartido.Constante
     Valor				INT NOT NULL,
     Descripcion			VARCHAR(100) NOT NULL,
     Orden				INT NOT NULL,
+	IsDeleted			BIT NOT NULL DEFAULT 0 -- Soft delete
+
 
 	CONSTRAINT UQ_Constante UNIQUE (GrupoConstanteId, Valor),
 );
