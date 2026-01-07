@@ -1,0 +1,3 @@
+0 (False/No): No está eliminado. Por lo tanto, el registro está ACTIVO.
+
+1 (True/Sí): Sí está eliminado. Por lo tanto, el registro está INACTIVO.
