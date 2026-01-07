@@ -100,20 +100,29 @@ GO
 
 -- Necesario para la creacion de varios registros
 -- Creamos un tipo de tabla para el esquema compartido
-IF NOT EXISTS (SELECT * FROM sys.types WHERE name = 'GrupoConstanteType' AND schema_id = SCHEMA_ID('compartido'))
+IF NOT EXISTS (SELECT * FROM sys.types WHERE name = 'GrupoConstanteCreateType' AND schema_id = SCHEMA_ID('compartido'))
 BEGIN
-    CREATE TYPE compartido.GrupoConstanteType AS TABLE
+    CREATE TYPE compartido.GrupoConstanteCreateType AS TABLE
     (   
-        GrupoConstanteId INT NULL, -- Necesario para actualizaciones
         Descripcion      VARCHAR(100),
         IsDeleted        BIT
     );
 END
 GO
 
+IF NOT EXISTS (SELECT * FROM sys.types WHERE name = 'GrupoConstanteUpdateType' AND schema_id = SCHEMA_ID('compartido'))
+BEGIN
+    CREATE TYPE compartido.GrupoConstanteUpdateType AS TABLE
+    (   
+        GrupoConstanteId INT NULL, -- Necesario para actualizaciones
+        Descripcion      VARCHAR(100)
+    );
+END
+GO
+
 CREATE OR ALTER PROCEDURE compartido.GrupoConstante_spAgregarVarios
 (
-    @GrupoConstanteLista compartido.GrupoConstanteType READONLY
+    @GrupoConstanteLista compartido.GrupoConstanteCreateType READONLY
 )
 AS
 BEGIN
@@ -130,56 +139,51 @@ GO
 
 CREATE OR ALTER PROCEDURE compartido.GrupoConstante_spActualizarVarios
 (
-    @GrupoConstanteLista compartido.GrupoConstanteType READONLY
+    @GrupoConstanteLista compartido.GrupoConstanteUpdateType READONLY
 )
 AS
 BEGIN
     SET NOCOUNT ON;
 
     UPDATE GC
-    SET GC.Descripcion = Lista.Descripcion,
-        GC.IsDeleted = Lista.IsDeleted
+    SET GC.Descripcion = Lista.Descripcion
     FROM compartido.GrupoConstante AS GC
     INNER JOIN @GrupoConstanteLista AS Lista 
         ON GC.GrupoConstanteId = Lista.GrupoConstanteId
-    WHERE GC.IsDeleted = 0; -- solo actualizar los que no están eliminados
+    WHERE GC.GrupoConstanteId = Lista.GrupoConstanteId
+        AND GC.IsDeleted = 0; -- solo actualizar los que no están eliminados
 
     SELECT @@ROWCOUNT;
 END
 GO
 CREATE OR ALTER PROCEDURE compartido.GrupoConstante_spDesactivarVarios
 (
-    @GrupoConstanteLista compartido.GrupoConstanteType READONLY
+    @Ids compartido.IdListTableType READONLY
 )
 AS
     BEGIN
         SET NOCOUNT ON;
-        UPDATE GC
-        SET GC.IsDeleted = Lista.IsDeleted
-        FROM compartido.GrupoConstante AS GC
-        INNER JOIN @GrupoConstanteLista AS Lista
-            ON GC.GrupoConstanteId = Lista.GrupoConstanteId
-        WHERE GC.IsDeleted = 0; -- solo actualizar los que no están eliminados
-
+        UPDATE GU
+        SET GU.IsDeleted = 1 -- Lo desactivamos
+        FROM compartido.GrupoConstante AS GU
+        INNER JOIN @Ids AS Lista ON GU.GrupoConstanteId = Lista.Id
+        WHERE GU.IsDeleted = 0; -- solo actualizar los que NO están eliminados
         SELECT @@ROWCOUNT;
-
-    END
+END
 GO
 
 CREATE OR ALTER PROCEDURE compartido.GrupoConstante_spActivarVarios
 (
-    @GrupoConstanteLista compartido.GrupoConstanteType READONLY
+    @Ids compartido.IdListTableType READONLY
 )
 AS
     BEGIN
         SET NOCOUNT ON;
-        UPDATE GC
-        SET GC.IsDeleted = Lista.IsDeleted
-        FROM compartido.GrupoConstante AS GC
-        INNER JOIN @GrupoConstanteLista AS Lista
-            ON GC.GrupoConstanteId = Lista.GrupoConstanteId
-        WHERE GC.IsDeleted = 1; -- solo actualizar los que están eliminados
-
+        UPDATE GU
+        SET GU.IsDeleted = 0 -- Lo activamos
+        FROM compartido.GrupoConstante AS GU
+        INNER JOIN @Ids AS Lista ON GU.GrupoConstanteId = Lista.Id
+        WHERE GU.IsDeleted = 1; -- solo actualizar los que están eliminados
         SELECT @@ROWCOUNT;
 
     END
@@ -225,15 +229,16 @@ GO
 
 /*
 GENERICOS:
-ObtenerPorIdAsync
-ObtenerTodosAsync
-AgregarAsync
-ActualizarAsync
-ExisteAsync
-ContarTotalAsync
-AgregarVariosAsync
-ActualizarVariosAsync
-DesactivarVariosAsync
+ObtenerPorId
+ObtenerTodos 
+Agregar 
+Actualizar 
+ExistePorId
+ContarTotal 
+AgregarVarios 
+ActualizarVarios 
+DesactivarVarios 
+ActivarVarios
 PROPIOS:
 ObtenerPorDescripcionAsync
 ExisteDescripcionAsync

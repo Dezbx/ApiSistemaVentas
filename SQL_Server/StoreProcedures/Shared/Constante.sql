@@ -116,11 +116,10 @@ GO
 
 -- Necesario para la creacion de varios registros
 -- Creamos un tipo de tabla para el esquema compartido
-IF NOT EXISTS (SELECT * FROM sys.types WHERE name = 'ConstanteType' AND schema_id = SCHEMA_ID('compartido'))
+IF NOT EXISTS (SELECT * FROM sys.types WHERE name = 'ConstanteCreateType' AND schema_id = SCHEMA_ID('compartido'))
 BEGIN
-    CREATE TYPE compartido.ConstanteType AS TABLE
+    CREATE TYPE compartido.ConstanteCreateType AS TABLE
     (   
-			ConstanteId			INT NULL,
 			GrupoConstanteId	INT,
 			Valor				INT,
 			Descripcion			VARCHAR(100),
@@ -130,9 +129,22 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT * FROM sys.types WHERE name = 'ConstanteUpdateType' AND schema_id = SCHEMA_ID('compartido'))
+BEGIN
+    CREATE TYPE compartido.ConstanteUpdateType AS TABLE
+    (   
+			ConstanteId			INT NULL,
+			GrupoConstanteId	INT,
+			Valor				INT,
+			Descripcion			VARCHAR(100),
+			Orden				INT
+    );
+END
+GO
+
 CREATE OR ALTER PROCEDURE compartido.Constante_spAgregarVarios
 (
-	@ConstanteLista compartido.ConstanteType READONLY	
+	@ConstanteLista compartido.ConstanteCreateType READONLY	
 )
 AS
     BEGIN
@@ -148,17 +160,16 @@ GO
 
 CREATE OR ALTER PROCEDURE compartido.Constante_spActualizarVarios
 (
-	@ConstanteLista compartido.ConstanteType READONLY
+	@ConstanteLista compartido.ConstanteUpdateType READONLY
 )
 AS
     BEGIN
         SET NOCOUNT ON;
-		UPDATE C 	-- Modificar tabla C (Constante) Linea 162
+		UPDATE C 	-- Modificar tabla C (Constante) Linea 175
 		SET C.GrupoConstanteId = Lista.GrupoConstanteId,
 			C.Valor = Lista.Valor,
 			C.Descripcion = Lista.Descripcion,
-			C.Orden = Lista.Orden,
-			C.IsDeleted = Lista.IsDeleted
+			C.Orden = Lista.Orden
 		FROM compartido.Constante AS C 
 		INNER JOIN @ConstanteLista AS Lista
 			ON C.ConstanteId = Lista.ConstanteId
@@ -171,17 +182,17 @@ GO
 
 CREATE OR ALTER PROCEDURE compartido.Constante_spDesactivarVarios
 (
-	@ConstanteLista compartido.ConstanteType READONLY
+	@Ids compartido.IdListTableType READONLY
 )
 AS
     BEGIN
         SET NOCOUNT ON;
 
 		UPDATE C 	
-		SET C.IsDeleted = Lista.IsDeleted
+		SET C.IsDeleted = 1
 		FROM compartido.Constante AS C 
-		INNER JOIN @ConstanteLista AS Lista
-			ON C.ConstanteId = Lista.ConstanteId
+		INNER JOIN @Ids AS Lista
+			ON C.ConstanteId = Lista.Id
 		WHERE C.IsDeleted = 0
 
 		SELECT @@ROWCOUNT;
@@ -191,17 +202,17 @@ GO
 
 CREATE OR ALTER PROCEDURE compartido.Constante_spActivarVarios
 (
-	@ConstanteLista compartido.ConstanteType READONLY
+	@Ids compartido.IdListTableType READONLY
 )
 AS
     BEGIN
         SET NOCOUNT ON;
 
 		UPDATE C 	
-		SET C.IsDeleted = Lista.IsDeleted
+		SET C.IsDeleted = 0
 		FROM compartido.Constante AS C 
-		INNER JOIN @ConstanteLista AS Lista
-			ON C.ConstanteId = Lista.ConstanteId
+		INNER JOIN @Ids AS Lista
+			ON C.ConstanteId = Lista.Id
 		WHERE C.IsDeleted = 1
 
 		SELECT @@ROWCOUNT;
@@ -369,14 +380,15 @@ GO
 
 GENERICOS:
 ObtenerPorId
-ObtenerTodos
-Agregar
-Actualizar
+ObtenerTodos 
+Agregar 
+Actualizar 
 ExistePorId
-ContarTotal
-AgregarVarios
-ActualizarVarios
-DesactivarVarios
+ContarTotal 
+AgregarVarios 
+ActualizarVarios 
+DesactivarVarios 
+ActivarVarios
 PROPIOS:
 ObtenerPorGrupoConstanteId
 ObtenerPorGrupoYValor
