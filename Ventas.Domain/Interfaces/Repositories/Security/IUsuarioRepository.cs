@@ -9,6 +9,5 @@ namespace Ventas.Domain.Interfaces.Repositories.Security
         Task<bool> ExisteCorreoAsync(string correo, int? excluirUsuarioId = null);
         Task<Usuario?> ObtenerPorNombreUsuarioAsync(string nombreUsuario);
         Task<int> ContarUsuariosPorRolIdAsync(int rolId);
-        Task<bool> EliminarFisicoAsync(int id, int usuarioId);    
     }
 }
