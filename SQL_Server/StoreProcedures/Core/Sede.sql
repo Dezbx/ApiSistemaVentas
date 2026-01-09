@@ -171,7 +171,7 @@ GO
 
 CREATE OR ALTER PROCEDURE core.Sede_spDesactivarVarios 
 (
-    @SedeIds compartido.IdListTableType READONLY
+    @SedeIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -180,14 +180,14 @@ AS
         SET S.IsDeleted = 1
         FROM core.Sede AS S
         INNER JOIN @SedeIds AS Lista    
-            ON S.SedeId = Lista.SedeId
+            ON S.SedeId = Lista.Id
             WHERE S.IsDeleted = 0;
         SELECT @@ROWCOUNT;
     END
 GO
 CREATE OR ALTER PROCEDURE core.Sede_spActivarVarios
 (
-    @SedeIds compartido.IdListTableType READONLY
+    @SedeIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -196,7 +196,7 @@ AS
         SET S.IsDeleted = 0
         FROM core.Sede AS S
         INNER JOIN @SedeIds AS Lista    
-            ON S.SedeId = Lista.SedeId
+            ON S.SedeId = Lista.Id
             WHERE S.IsDeleted = 1;
         SELECT @@ROWCOUNT;
     END
@@ -247,13 +247,13 @@ AS
             S.Descripcion,
             S.Direccion,
             E.EmpleadoId,
-            E.Nombre,
+            E.Nombres,
             E.Paterno,
             E.Materno,
             E.NumeroDocumento
         FROM core.Sede AS S
         INNER JOIN core.Empleado AS E
-            ON S.SedeId = E.SedeId
+            ON S.SedeId = E.EmpleadoSedeId
         WHERE S.IsDeleted = 0 AND E.IsDeleted = 0;
     END
 GO
@@ -267,7 +267,7 @@ AS
         SET NOCOUNT ON;
         IF EXISTS 
         (
-            SELECT 1 FROM core.Empleado WHERE SedeId = @SedeId AND IsDeleted = 0
+            SELECT 1 FROM core.Empleado WHERE EmpleadoSedeId = @SedeId AND IsDeleted = 0
         )
             SELECT CAST (1 AS BIT); -- Devuelve 1 si tiene movimientos asociados
         ELSE

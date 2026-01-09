@@ -177,10 +177,10 @@ AS
         WHERE R.IsDeleted = 0; -- solo actualizar los que no están eliminados
     END
 GO
- 
+
 CREATE OR ALTER PROCEDURE seguridad.Rol_spDesactivarVarios
 (
-    @Ids compartido.IdListTableType READONLY, -- La lista de IDs que vienen de C#
+    @Ids compartido.IdListType READONLY, -- La lista de IDs que vienen de C#
     @UpdatedBy INT                            -- Quién hace la acción
 )
 AS
@@ -201,7 +201,7 @@ GO
  
 CREATE OR ALTER PROCEDURE seguridad.Rol_spActivarVarios
 (
-    @Ids compartido.IdListTableType READONLY, -- La lista de IDs que vienen de C#
+    @Ids compartido.IdListType READONLY, -- La lista de IDs que vienen de C#
     @UpdatedBy INT                            -- Quién hace la acción
 )
 AS 

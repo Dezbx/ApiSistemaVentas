@@ -155,9 +155,10 @@ BEGIN
     SELECT @@ROWCOUNT;
 END
 GO
+
 CREATE OR ALTER PROCEDURE compartido.GrupoConstante_spDesactivarVarios
 (
-    @Ids compartido.IdListTableType READONLY
+    @GrupoConstanteIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -165,7 +166,7 @@ AS
         UPDATE GU
         SET GU.IsDeleted = 1 -- Lo desactivamos
         FROM compartido.GrupoConstante AS GU
-        INNER JOIN @Ids AS Lista ON GU.GrupoConstanteId = Lista.Id
+        INNER JOIN @GrupoConstanteIds AS ListaGrupoConstante ON GU.GrupoConstanteId = ListaGrupoConstante.Id
         WHERE GU.IsDeleted = 0; -- solo actualizar los que NO están eliminados
         SELECT @@ROWCOUNT;
 END
@@ -173,7 +174,7 @@ GO
 
 CREATE OR ALTER PROCEDURE compartido.GrupoConstante_spActivarVarios
 (
-    @Ids compartido.IdListTableType READONLY
+    @GrupoConstanteIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -181,7 +182,7 @@ AS
         UPDATE GU
         SET GU.IsDeleted = 0 -- Lo activamos
         FROM compartido.GrupoConstante AS GU
-        INNER JOIN @Ids AS Lista ON GU.GrupoConstanteId = Lista.Id
+        INNER JOIN @GrupoConstanteIds AS ListaGrupoConstante ON GU.GrupoConstanteId = ListaGrupoConstante.Id
         WHERE GU.IsDeleted = 1; -- solo actualizar los que están eliminados
         SELECT @@ROWCOUNT;
 

@@ -9,25 +9,25 @@ AS
     BEGIN
         SET NOCOUNT ON;
         SELECT 
-        EmpleadoId,				
-        E.NombreUsuario,	
+        E.EmpleadoId,				
+        U.NombreUsuario,	
         S.Descripcion AS Sede,			
         TD.Descripcion AS TipoDocumento,
         C.Descripcion AS Cargo,		
-        Paterno,				
-        Materno,				
-        Nombres,				
-        NumeroDocumento,		
-        Correo,				
-        Telefono,				
-        Sexo,				
-        FechaNacimiento,		
-        Direccion,				
-        E.Descripcion AS Estado		
+        E.Paterno,				
+        E.Materno,				
+        E.Nombres,				
+        E.NumeroDocumento,		
+        E.Correo,				
+        E.Telefono,				
+        E.Sexo,				
+        E.FechaNacimiento,		
+        E.Direccion,				
+        CO.Descripcion AS Estado		
         FROM core.Empleado AS E
-        INNER JOIN Usuario AS S ON E.EmpleadoUsuarioId = S.UsuarioId
-        INNER JOIN Sede AS S ON E.EmpleadoSedeId = S.SedeId
-        INNER JOIN TipoDocumento AS TD ON E.EmpleadoTipoDocumentoId = TD.TipoDocumentoId
+        INNER JOIN seguridad.Usuario AS U ON E.EmpleadoUsuarioId = U.UsuarioId
+        INNER JOIN core.Sede AS S ON E.EmpleadoSedeId = S.SedeId
+        INNER JOIN compartido.TipoDocumento AS TD ON E.EmpleadoTipoDocumentoId = TD.TipoDocumentoId
         INNER JOIN Cargo AS C ON E.EmpleadoCargoId = C.CargoId
         INNER JOIN compartido.Constante AS CO ON E.EstadoConstanteId = CO.ConstanteId
             WHERE EmpleadoId = @EmpleadoId
@@ -40,25 +40,25 @@ AS
     BEGIN
         SET NOCOUNT ON;
         SELECT 
-        EmpleadoId,				
-        E.NombreUsuario,		
+        E.EmpleadoId,				
+        U.NombreUsuario,	
         S.Descripcion AS Sede,			
         TD.Descripcion AS TipoDocumento,
         C.Descripcion AS Cargo,		
-        Paterno,				
-        Materno,				
-        Nombres,				
-        NumeroDocumento,		
-        Correo,				
-        Telefono,				
-        Sexo,				
-        FechaNacimiento,		
-        Direccion,				
-        E.Descripcion AS Estado		
+        E.Paterno,				
+        E.Materno,				
+        E.Nombres,				
+        E.NumeroDocumento,		
+        E.Correo,				
+        E.Telefono,				
+        E.Sexo,				
+        E.FechaNacimiento,		
+        E.Direccion,				
+        CO.Descripcion AS Estado		
         FROM core.Empleado AS E
-        INNER JOIN Usuario AS S ON E.EmpleadoUsuarioId = S.UsuarioId
-        INNER JOIN Sede AS S ON E.EmpleadoSedeId = S.SedeId
-        INNER JOIN TipoDocumento AS TD ON E.EmpleadoTipoDocumentoId = TD.TipoDocumentoId
+        INNER JOIN seguridad.Usuario AS U ON E.EmpleadoUsuarioId = U.UsuarioId
+        INNER JOIN core.Sede AS S ON E.EmpleadoSedeId = S.SedeId
+        INNER JOIN compartido.TipoDocumento AS TD ON E.EmpleadoTipoDocumentoId = TD.TipoDocumentoId
         INNER JOIN Cargo AS C ON E.EmpleadoCargoId = C.CargoId
         INNER JOIN compartido.Constante AS CO ON E.EstadoConstanteId = CO.ConstanteId
     END
@@ -336,7 +336,7 @@ GO
 
 CREATE OR ALTER PROCEDURE core.Empleado_spDesactivarVarios
 (
-    @EmpleadoIds compartido.IdListTableType READONLY
+    @EmpleadoIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -345,7 +345,7 @@ AS
         UPDATE E 	
         SET E.IsDeleted = 1
         FROM core.Empleado AS E 
-        INNER JOIN @Ids AS Lista
+        INNER JOIN @EmpleadoIds AS Lista
             ON E.EmpleadoId = Lista.Id
         WHERE E.IsDeleted = 0
 
@@ -356,7 +356,7 @@ GO
 
 CREATE OR ALTER PROCEDURE core.Empleado_spActivarVarios
 (
-    @EmpleadoIds compartido.IdListTableType READONLY
+    @EmpleadoIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -365,7 +365,7 @@ AS
         UPDATE E 	
         SET E.IsDeleted = 0
         FROM core.Empleado AS E 
-        INNER JOIN @Ids AS Lista
+        INNER JOIN @EmpleadoIds AS Lista
             ON E.EmpleadoId = Lista.Id
         WHERE E.IsDeleted = 1
 
@@ -378,28 +378,28 @@ CREATE OR ALTER PROCEDURE core.Empleado_spObtenerEliminados
 AS
 BEGIN
     SET NOCOUNT ON;
-    SELECT 
-    EmpleadoId,				
-    E.NombreUsuario,		
-    S.Descripcion AS Sede,			
-    TD.Descripcion AS TipoDocumento,
-    C.Descripcion AS Cargo,		
-    Paterno,				
-    Materno,				
-    Nombres,				
-    NumeroDocumento,		
-    Correo,				
-    Telefono,				
-    Sexo,				
-    FechaNacimiento,		
-    Direccion,				
-    E.Descripcion AS Estado		
-    FROM core.Empleado AS E
-    INNER JOIN Usuario AS S ON E.EmpleadoUsuarioId = S.UsuarioId
-    INNER JOIN Sede AS S ON E.EmpleadoSedeId = S.SedeId
-    INNER JOIN TipoDocumento AS TD ON E.EmpleadoTipoDocumentoId = TD.TipoDocumentoId
-    INNER JOIN Cargo AS C ON E.EmpleadoCargoId = C.CargoId
-    INNER JOIN compartido.Constante AS CO ON E.EstadoConstanteId = CO.ConstanteId
+     SELECT 
+        E.EmpleadoId,				
+        U.NombreUsuario,	
+        S.Descripcion AS Sede,			
+        TD.Descripcion AS TipoDocumento,
+        C.Descripcion AS Cargo,		
+        E.Paterno,				
+        E.Materno,				
+        E.Nombres,				
+        E.NumeroDocumento,		
+        E.Correo,				
+        E.Telefono,				
+        E.Sexo,				
+        E.FechaNacimiento,		
+        E.Direccion,				
+        CO.Descripcion AS Estado		
+        FROM core.Empleado AS E
+        INNER JOIN seguridad.Usuario AS U ON E.EmpleadoUsuarioId = U.UsuarioId
+        INNER JOIN core.Sede AS S ON E.EmpleadoSedeId = S.SedeId
+        INNER JOIN compartido.TipoDocumento AS TD ON E.EmpleadoTipoDocumentoId = TD.TipoDocumentoId
+        INNER JOIN Cargo AS C ON E.EmpleadoCargoId = C.CargoId
+        INNER JOIN compartido.Constante AS CO ON E.EstadoConstanteId = CO.ConstanteId
     WHERE E.IsDeleted = 1
 END
 GO
@@ -429,30 +429,30 @@ CREATE OR ALTER PROCEDURE core.Empleado_spObtenerPorSedeId
 AS
 BEGIN
     SET NOCOUNT ON;
-SELECT 
-    EmpleadoId,				
-    E.NombreUsuario,	
-    S.Descripcion AS Sede,			
-    TD.Descripcion AS TipoDocumento,
-    C.Descripcion AS Cargo,		
-    Paterno,				
-    Materno,				
-    Nombres,				
-    NumeroDocumento,		
-    Correo,				
-    Telefono,				
-    Sexo,				
-    FechaNacimiento,		
-    Direccion,				
-    E.Descripcion AS Estado		
-    FROM core.Empleado AS E
-    INNER JOIN Usuario AS S ON E.EmpleadoUsuarioId = S.UsuarioId
-    INNER JOIN Sede AS S ON E.EmpleadoSedeId = S.SedeId
-    INNER JOIN TipoDocumento AS TD ON E.EmpleadoTipoDocumentoId = TD.TipoDocumentoId
-    INNER JOIN Cargo AS C ON E.EmpleadoCargoId = C.CargoId
-    INNER JOIN compartido.Constante AS CO ON E.EstadoConstanteId = CO.ConstanteId
-
-WHERE EmpleadoSedeId = @EmpleadoSedeId AND IsDeleted = 0
+    SELECT 
+        E.EmpleadoId,				
+        U.NombreUsuario,	
+        S.Descripcion AS Sede,			
+        TD.Descripcion AS TipoDocumento,
+        C.Descripcion AS Cargo,		
+        E.Paterno,				
+        E.Materno,				
+        E.Nombres,				
+        E.NumeroDocumento,		
+        E.Correo,				
+        E.Telefono,				
+        E.Sexo,				
+        E.FechaNacimiento,		
+        E.Direccion,				
+        CO.Descripcion AS Estado		
+        FROM core.Empleado AS E
+        INNER JOIN seguridad.Usuario AS U ON E.EmpleadoUsuarioId = U.UsuarioId
+        INNER JOIN core.Sede AS S ON E.EmpleadoSedeId = S.SedeId
+        INNER JOIN compartido.TipoDocumento AS TD ON E.EmpleadoTipoDocumentoId = TD.TipoDocumentoId
+        INNER JOIN Cargo AS C ON E.EmpleadoCargoId = C.CargoId
+        INNER JOIN compartido.Constante AS CO ON E.EstadoConstanteId = CO.ConstanteId
+        WHERE EmpleadoSedeId = @EmpleadoSedeId 
+            AND E.IsDeleted = 0
 END
 GO
 
@@ -464,28 +464,28 @@ AS
 BEGIN
     SET NOCOUNT ON;
     SELECT 
-        EmpleadoId,				
-        E.NombreUsuario,	
+        E.EmpleadoId,				
+        U.NombreUsuario,	
         S.Descripcion AS Sede,			
         TD.Descripcion AS TipoDocumento,
         C.Descripcion AS Cargo,		
-        Paterno,				
-        Materno,				
-        Nombres,				
-        NumeroDocumento,		
-        Correo,				
-        Telefono,				
-        Sexo,				
-        FechaNacimiento,		
-        Direccion,				
-        E.Descripcion AS Estado		
+        E.Paterno,				
+        E.Materno,				
+        E.Nombres,				
+        E.NumeroDocumento,		
+        E.Correo,				
+        E.Telefono,				
+        E.Sexo,				
+        E.FechaNacimiento,		
+        E.Direccion,				
+        CO.Descripcion AS Estado		
         FROM core.Empleado AS E
-        INNER JOIN Usuario AS S ON E.EmpleadoUsuarioId = S.UsuarioId
-        INNER JOIN Sede AS S ON E.EmpleadoSedeId = S.SedeId
-        INNER JOIN TipoDocumento AS TD ON E.EmpleadoTipoDocumentoId = TD.TipoDocumentoId
+        INNER JOIN seguridad.Usuario AS U ON E.EmpleadoUsuarioId = U.UsuarioId
+        INNER JOIN core.Sede AS S ON E.EmpleadoSedeId = S.SedeId
+        INNER JOIN compartido.TipoDocumento AS TD ON E.EmpleadoTipoDocumentoId = TD.TipoDocumentoId
         INNER JOIN Cargo AS C ON E.EmpleadoCargoId = C.CargoId
         INNER JOIN compartido.Constante AS CO ON E.EstadoConstanteId = CO.ConstanteId
-WHERE NumeroDocumento = @NumeroDocumento AND IsDeleted = 0
+WHERE NumeroDocumento = @NumeroDocumento AND E.IsDeleted = 0
 END
 GO
 
@@ -517,28 +517,28 @@ AS
 BEGIN
     SET NOCOUNT ON;
     SELECT 
-        EmpleadoId,				
-        E.NombreUsuario,	
+        E.EmpleadoId,				
+        U.NombreUsuario,	
         S.Descripcion AS Sede,			
         TD.Descripcion AS TipoDocumento,
         C.Descripcion AS Cargo,		
-        Paterno,				
-        Materno,				
-        Nombres,				
-        NumeroDocumento,		
-        Correo,				
-        Telefono,				
-        Sexo,				
-        FechaNacimiento,		
-        Direccion,				
-        E.Descripcion AS Estado		
+        E.Paterno,				
+        E.Materno,				
+        E.Nombres,				
+        E.NumeroDocumento,		
+        E.Correo,				
+        E.Telefono,				
+        E.Sexo,				
+        E.FechaNacimiento,		
+        E.Direccion,				
+        CO.Descripcion AS Estado		
         FROM core.Empleado AS E
-        INNER JOIN Usuario AS S ON E.EmpleadoUsuarioId = S.UsuarioId
-        INNER JOIN Sede AS S ON E.EmpleadoSedeId = S.SedeId
-        INNER JOIN TipoDocumento AS TD ON E.EmpleadoTipoDocumentoId = TD.TipoDocumentoId
+        INNER JOIN seguridad.Usuario AS U ON E.EmpleadoUsuarioId = U.UsuarioId
+        INNER JOIN core.Sede AS S ON E.EmpleadoSedeId = S.SedeId
+        INNER JOIN compartido.TipoDocumento AS TD ON E.EmpleadoTipoDocumentoId = TD.TipoDocumentoId
         INNER JOIN Cargo AS C ON E.EmpleadoCargoId = C.CargoId
         INNER JOIN compartido.Constante AS CO ON E.EstadoConstanteId = CO.ConstanteId
-WHERE EmpleadoCargoId = @EmpleadoCargoId AND IsDeleted = 0
+WHERE EmpleadoCargoId = @EmpleadoCargoId AND E.IsDeleted = 0
 END
 GO
 CREATE OR ALTER PROCEDURE core.Empleado_spExisteCorreo

@@ -148,6 +148,7 @@ IF NOT EXISTS (SELECT * FROM sys.types WHERE name = 'UsuarioUpdateType' AND sche
 BEGIN
     CREATE TYPE seguridad.UsuarioUpdateType AS TABLE 
     (
+        UsuarioId       INT,
         UsuarioRolId	INT,
         NombreUsuario	NVARCHAR (50), 
         Correo			NVARCHAR(100), 
@@ -192,7 +193,7 @@ AS
         SELECT @@ROWCOUNT;
     END
 GO 
- 
+
 CREATE OR ALTER PROCEDURE seguridad.Usuario_spActualizarVarios 
 (
     @Usuarios seguridad.UsuarioUpdateType READONLY
@@ -217,7 +218,7 @@ GO
  
 CREATE OR ALTER PROCEDURE seguridad.Usuario_spDesactivarVarios 
 (
-    @Ids compartido.IdListTableType READONLY
+    @UsuarioIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -225,8 +226,8 @@ AS
         UPDATE U
         SET U.IsDeleted = 1
         FROM seguridad.Usuario AS U
-        INNER JOIN @Ids AS Ids
-            ON U.UsuarioId = Ids.Id
+        INNER JOIN @UsuarioIds AS ListaUsuarios
+            ON U.UsuarioId = ListaUsuarios.Id
         WHERE U.IsDeleted = 0;
         SELECT @@ROWCOUNT;
     END
@@ -234,7 +235,7 @@ GO
  
 CREATE OR ALTER PROCEDURE seguridad.Usuario_spActivarVarios
 (
-    @Ids compartido.IdListTableType READONLY
+    @UsuarioIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -242,8 +243,8 @@ AS
         UPDATE U
         SET U.IsDeleted = 0
         FROM seguridad.Usuario AS U
-        INNER JOIN @Ids AS Ids
-            ON U.UsuarioId = Ids.Id
+        INNER JOIN @UsuarioIds AS ListaUsuarios
+            ON U.UsuarioId = ListaUsuarios.Id
         WHERE U.IsDeleted = 1;
         SELECT @@ROWCOUNT;
     END

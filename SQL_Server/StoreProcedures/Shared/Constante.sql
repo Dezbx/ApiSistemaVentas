@@ -77,7 +77,7 @@ AS
             Descripcion = @Descripcion,
             Orden = @Orden
         WHERE ConstanteId = @ConstanteId
-			AND C.IsDeleted = 0;
+			AND IsDeleted = 0;
     END
 GO
 
@@ -94,7 +94,7 @@ AS
 			SELECT 1 
 			FROM compartido.Constante 
 			WHERE ConstanteId = @ConstanteId  
-				AND C.IsDeleted = 0
+				AND IsDeleted = 0
 		)
             SELECT CAST(1 AS BIT);
         ELSE
@@ -179,10 +179,9 @@ AS
     END
 GO
 
-
 CREATE OR ALTER PROCEDURE compartido.Constante_spDesactivarVarios
 (
-	@Ids compartido.IdListTableType READONLY
+	@ConstanteIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -191,8 +190,8 @@ AS
 		UPDATE C 	
 		SET C.IsDeleted = 1
 		FROM compartido.Constante AS C 
-		INNER JOIN @Ids AS Lista
-			ON C.ConstanteId = Lista.Id
+		INNER JOIN @ConstanteIds AS ListaConstantes
+			ON C.ConstanteId = ListaConstantes.Id
 		WHERE C.IsDeleted = 0
 
 		SELECT @@ROWCOUNT;
@@ -202,7 +201,7 @@ GO
 
 CREATE OR ALTER PROCEDURE compartido.Constante_spActivarVarios
 (
-	@Ids compartido.IdListTableType READONLY
+	@ConstanteIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -211,15 +210,14 @@ AS
 		UPDATE C 	
 		SET C.IsDeleted = 0
 		FROM compartido.Constante AS C 
-		INNER JOIN @Ids AS Lista
-			ON C.ConstanteId = Lista.Id
+		INNER JOIN @ConstanteIds AS ListaConstantes
+			ON C.ConstanteId = ListaConstantes.Id
 		WHERE C.IsDeleted = 1
 
 		SELECT @@ROWCOUNT;
 
     END
 GO
-
 
 CREATE OR ALTER PROCEDURE compartido.Constante_spObtenerPorGrupoConstanteId
 (

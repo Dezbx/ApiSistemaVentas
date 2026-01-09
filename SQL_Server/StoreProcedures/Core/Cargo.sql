@@ -97,6 +97,7 @@ IF NOT EXISTS (SELECT * FROM sys.types WHERE name = 'CargoUpdateType' AND schema
 BEGIN
     CREATE TYPE core.CargoUpdateType AS TABLE
     (
+        CargoId INT,
         Descripcion NVARCHAR(100)
     )
 END
@@ -136,7 +137,7 @@ GO
 
 CREATE OR ALTER PROCEDURE core.Cargo_spDesactivarVarios 
 (
-    @CargoIds compartido.IdListTableType READONLY
+    @CargosIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -144,8 +145,8 @@ AS
         UPDATE C
         SET C.IsDeleted = 1
         FROM core.Cargo AS C
-        INNER JOIN @CargoIds AS Ids
-            ON C.CargoId = Ids.Id
+        INNER JOIN @CargosIds AS ListaCargos
+            ON C.CargoId = ListaCargos.Id
         WHERE C.IsDeleted = 0
 
         SELECT @@ROWCOUNT;
@@ -154,7 +155,7 @@ GO
 
 CREATE OR ALTER PROCEDURE core.Cargo_spActivarVarios
 (
-    @CargoIds compartido.IdListTableType READONLY
+    @CargoIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -162,8 +163,8 @@ AS
         UPDATE C
         SET C.IsDeleted = 0
         FROM core.Cargo AS C
-        INNER JOIN @CargoIds AS Ids
-            ON C.CargoId = Ids.Id
+        INNER JOIN @CargoIds AS ListaCargos
+            ON C.CargoId = ListaCargos.Id
         WHERE C.IsDeleted = 1   
         SELECT @@ROWCOUNT;
     END

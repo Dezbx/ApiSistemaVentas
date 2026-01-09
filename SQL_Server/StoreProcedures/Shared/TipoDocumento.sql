@@ -159,10 +159,10 @@ AS
         SELECT @@ROWCOUNT;
     END
 GO
- 
+
 CREATE OR ALTER PROCEDURE compartido.TipoDocumento_spDesactivarVarios 
 (
-    @Ids compartido.IdListTableType READONLY
+    @TipoDocumentoIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -171,8 +171,8 @@ AS
         SET
             TD.IsDeleted = 1
         FROM compartido.TipoDocumento AS TD
-        INNER JOIN @Ids AS Ids
-            ON TD.TipoDocumentoId = Ids.Id
+        INNER JOIN @TipoDocumentoIds AS ListaTipoDocumentos
+            ON TD.TipoDocumentoId = ListaTipoDocumentos.Id
         WHERE TD.IsDeleted = 0;
         SELECT @@ROWCOUNT;
     END
@@ -180,7 +180,7 @@ GO
  
 CREATE OR ALTER PROCEDURE compartido.TipoDocumento_spActivarVarios
 (
-    @Ids compartido.IdListTableType READONLY
+    @TipoDocumentoIds compartido.IdListType READONLY
 )
 AS
     BEGIN
@@ -189,8 +189,8 @@ AS
         SET
             TD.IsDeleted = 0
         FROM compartido.TipoDocumento AS TD
-        INNER JOIN @Ids AS Ids
-            ON TD.TipoDocumentoId = Ids.Id
+        INNER JOIN @TipoDocumentoIds AS ListaTipoDocumentos
+            ON TD.TipoDocumentoId = ListaTipoDocumentos.Id
         WHERE TD.IsDeleted = 1;
         SELECT @@ROWCOUNT;
     END
