@@ -150,8 +150,7 @@ BEGIN
     FROM compartido.GrupoConstante AS GC
     INNER JOIN @GrupoConstanteLista AS Lista 
         ON GC.GrupoConstanteId = Lista.GrupoConstanteId
-    WHERE GC.GrupoConstanteId = Lista.GrupoConstanteId
-        AND GC.IsDeleted = 0; -- solo actualizar los que no están eliminados
+    WHERE GC.IsDeleted = 0; -- solo actualizar los que no están eliminados
 
     SELECT @@ROWCOUNT;
 END

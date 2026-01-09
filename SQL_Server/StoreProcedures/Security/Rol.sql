@@ -100,9 +100,6 @@ AS
 GO
  
 CREATE OR ALTER PROCEDURE seguridad.Rol_spContarTotal 
-(
-    @RolId INT
-)
 AS 
     BEGIN
         SET NOCOUNT ON;

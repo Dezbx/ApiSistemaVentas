@@ -117,16 +117,12 @@ AS
 GO 
  
 CREATE OR ALTER PROCEDURE seguridad.Usuario_spContarTotal 
-(
-    @UsuarioId INT
-)
 AS
     BEGIN
         SET NOCOUNT ON;
         SELECT COUNT(*) AS TotalUsuarios
         FROM seguridad.Usuario
-        WHERE UsuarioId = @UsuarioId
-        AND IsDeleted = 0;
+        WHERE IsDeleted = 0;
     END
 GO 
 
