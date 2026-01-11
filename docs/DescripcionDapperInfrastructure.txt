@@ -1,0 +1,4 @@
+Dado que la arquitectura usa Value Objects (como se ve en TypeHandlers), 
+Dapper se encargará de mapear automáticamente la columna Descripcion de la base de datos 
+hacia la propiedad Descripcion en la entidad GrupoConstante, siempre y cuando el TypeHandler 
+correspondiente esté registrado.

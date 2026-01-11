@@ -111,8 +111,7 @@ AS
         @CreatedBy,
         @IsDeleted
         )
-        SELECT CAST(SCOPE_IDENTITY() AS INT);
-
+        SELECT CAST(SCOPE_IDENTITY() AS INT)
     END
 GO
  
@@ -477,7 +476,7 @@ GO
 CREATE OR ALTER PROCEDURE core.Cliente_spExisteUsuarioVinculado
 (
    @UsuarioId INT,
-   @ExcludeClienteId INT = NULL -- Útil para cuando estás editando
+   @ExcludeClienteId INT = NULL -- ï¿½til para cuando estï¿½s editando
 )
 AS 
     BEGIN
@@ -504,7 +503,7 @@ AS
     BEGIN
         SET NOCOUNT ON;
 
-        -- Limpiamos el término y agregamos comodines para búsqueda parcial
+        -- Limpiamos el tï¿½rmino y agregamos comodines para bï¿½squeda parcial
         SET @TerminoBusqueda = '%' + TRIM(@TerminoBusqueda) + '%';
         SELECT 
             C.ClienteId,
